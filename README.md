@@ -8,7 +8,7 @@
 
 Flash Reference is a Flash Card app based on Laravel.
 
-### Install all the optimizers on Ubuntu:
+### Install all the media optimizers on Ubuntu:
     sudo apt install jpegoptim optipng pngquant gifsicle
     npm install -g svgo
 

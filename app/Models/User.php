@@ -36,4 +36,12 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    /**
+     * The institutions that the user belongs to.
+     */
+    public function institutions()
+    {
+        return $this->belongsToMany(Institution::class);
+    }
 }
