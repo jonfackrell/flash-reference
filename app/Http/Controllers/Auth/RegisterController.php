@@ -11,6 +11,7 @@ use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
+use Spatie\Newsletter\Newsletter;
 
 class RegisterController extends Controller
 {
@@ -86,6 +87,13 @@ class RegisterController extends Controller
         ]);
 
         $user->institutions()->syncWithoutDetaching($institution);
+
+        if(env('MAILCHIMP_APIKEY')){
+            Newsletter::subscribe($user->email, [
+                'FIRSTNAME' => $user->first_name,
+                'LASTNAME' => $user->last_name,
+                ]);
+        }
 
         return $user;
     }

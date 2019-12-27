@@ -37,6 +37,14 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    public function getFirstNameAttribute() {
+        return explode(' ', $this->name)[0];
+    }
+
+    public function getLastNameAttribute() {
+        return last(explode(' ', $this->name));
+    }
+
     /**
      * The institutions that the user belongs to.
      */
@@ -44,4 +52,6 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Institution::class);
     }
+
+
 }
