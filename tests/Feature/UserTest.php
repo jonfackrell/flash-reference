@@ -62,7 +62,7 @@ class UserTest extends TestCase
             'lms' => $lms,
         ]);
 
-        $this->assertDatabaseHas('users', [
+        $this->assertDatabaseHas('admins', [
             'name' => $name,
             'email' => $email,
         ]);

@@ -15,11 +15,20 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Auth::routes();
+
+Auth::routes(['register' => false]);
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () {
+Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
+
+    Auth::routes();
+    Route::post('/login', [\App\Http\Controllers\Admin\Auth\LoginController::class, 'login'])->name('login');
+    Route::post('/register', [\App\Http\Controllers\Admin\Auth\RegisterController::class, 'register'])->name('register');
+
+});
+
+Route::middleware(['auth:admin'])->prefix('admin')->name('admin.')->group(function () {
 
     Route::get('/settings', 'SettingsController@index')->name('settings');
 
