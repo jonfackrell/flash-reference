@@ -24,18 +24,18 @@ class CreateInstitutionsTable extends Migration
             $table->timestamps();
         });
 
-        Schema::create('institution_user', function (Blueprint $table) {
+        Schema::create('admin_institution', function (Blueprint $table) {
             $table->unsignedBigInteger('institution_id')->unsigned();
-            $table->unsignedBigInteger('user_id')->unsigned();
+            $table->unsignedBigInteger('admin_id')->unsigned();
 
             $table->foreign('institution_id')
                 ->references('id')
                 ->on('institutions');
-            $table->foreign('user_id')
+            $table->foreign('admin_id')
                 ->references('id')
-                ->on('users')
+                ->on('admins')
                 ->onDelete('cascade');
-            $table->primary(['institution_id', 'user_id']);
+            $table->primary(['institution_id', 'admin_id']);
         });
     }
 

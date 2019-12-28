@@ -28,8 +28,9 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
 
 });
 
-Route::middleware(['auth:admin'])->prefix('admin')->name('admin.')->group(function () {
+Route::middleware(['auth:admin'])->namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
 
+    Route::get('/', 'HomeController@dashboard')->name('home');
     Route::get('/settings', 'SettingsController@index')->name('settings');
 
 });

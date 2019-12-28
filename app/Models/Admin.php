@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Notifications\AdminPasswordResetNotification;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -53,6 +54,11 @@ class Admin extends Authenticatable
     public function institutions()
     {
         return $this->belongsToMany(Institution::class);
+    }
+
+    public function sendPasswordResetNotification($token)
+    {
+        $this->notify(new AdminPasswordResetNotification($token));
     }
 
 
