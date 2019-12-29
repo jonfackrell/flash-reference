@@ -20,9 +20,12 @@
         "laravolt/semantic-form": "^2.11",
         "league/flysystem-aws-s3-v3": "~1.0",
         "league/flysystem-cached-adapter": "~1.0",
+        "maatwebsite/excel": "^3.1",
         "spatie/laravel-medialibrary": "^7.0.0",
         "spatie/laravel-newsletter": "^4.7",
-        "symfony/translation": "4.3.8"
+        "symfony/translation": "4.3.8",
+        "wildside/userstamps": "^1.1",
+        "zanysoft/laravel-zip": "^1.0"
     },
     "require-dev": {
         "facade/ignition": "^1.4",

@@ -61,5 +61,10 @@ class Admin extends Authenticatable
         $this->notify(new AdminPasswordResetNotification($token));
     }
 
+    public function uuidColumns(): array
+    {
+        return ['uuid', 'custom_column'];
+    }
+
 
 }
