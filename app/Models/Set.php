@@ -12,4 +12,12 @@ class Set extends Model
 
     protected $casts = ['uuid' => 'uuid'];
 
+    /**
+     * The cards that belong to the set.
+     */
+    public function cards()
+    {
+        return $this->hasMany(Card::class);
+    }
+
 }

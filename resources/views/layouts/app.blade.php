@@ -31,7 +31,7 @@
         .ui.menu .item img.logo {
             margin-right: 1.5em;
         }
-        .main.container {
+        .main {
             margin-top: 7em;
         }
         .wireframe {
@@ -51,6 +51,10 @@
         <a href="{{ url('/') }}" class="header item">
             <img class="logo" src="{{ asset('img/small-white-flash-reference-logo.png') }}">
             {{ config('app.name', 'Laravel') }}
+        </a>
+        <a class="item" href="#">
+            <i class="plus icon"></i>
+            {{ __('New Set') }}
         </a>
         <div class="right menu">
             @guest
@@ -78,13 +82,27 @@
     </div>
 </div>
 
-@yield('content')
+<div class="main">
+    @yield('content')
+</div>
 
 
 <!-- Scripts -->
 <script src="{{ asset('js/app.js') }}" defer></script>
 <script src="{{ asset('js/semantic.min.js') }}" defer></script>
 @stack('scripts')
+<script>
+    $(function(){
+        $('.message .close')
+            .on('click', function() {
+                $(this)
+                    .closest('.message')
+                    .transition('fade')
+                ;
+            })
+        ;
+    });
+</script>
 </body>
 
 </html>

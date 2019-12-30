@@ -55,7 +55,11 @@
             "database/factories"
         ],
         "files": [
-            "app/helpers.php"
+            "app/helpers.php",
+            "app/Http/LTI/blti.php",
+            "app/Http/LTI/OAuth.php",
+            "app/Http/LTI/OAuthBody.php",
+            "app/Http/LTI/TrivialOAuthDataStore.php"
         ]
     },
     "autoload-dev": {

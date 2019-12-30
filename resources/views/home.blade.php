@@ -2,15 +2,17 @@
 
 @section('content')
 
-    <div class="ui container">
-        <div class="ui grid">
-            <div class="sixteen wide column">
-                <div class="ui raised segment">
-                    <h1 class="ui header"></h1>
-                </div>
-                <div class="ui raised segment">
-
-                </div>
+    <div class="ui stackable three column centered grid">
+        <div class="three wide column">
+            <div class="ui vertical pointing menu">
+                <a href="{{ route('home') }}" class="active item">
+                    {{ __('Home') }}
+                </a>
+            </div>
+        </div>
+        <div class="eight wide column">
+            <div class="ui cards">
+                @each('partials.sets.home', $user->sets, 'set', 'partials.sets.getting-started')
             </div>
         </div>
     </div>

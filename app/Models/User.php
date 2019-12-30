@@ -53,6 +53,22 @@ class User extends Authenticatable
         return $this->belongsToMany(Institution::class);
     }
 
+    /**
+     * The courses that belong to the user.
+     */
+    public function courses()
+    {
+        return $this->hasMany(Course::class);
+    }
+
+    /**
+     * The sets that belong to the user.
+     */
+    public function sets()
+    {
+        return $this->hasMany(Set::class);
+    }
+
     public function getRolesAttribute($value) {
         return explode('|', $value);
     }
