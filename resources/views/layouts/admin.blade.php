@@ -22,6 +22,12 @@
         body {
             background-color: #FFFFFF;
         }
+        .ui.fixed.menu{
+            background-color: #3e92b9;
+        }
+        .ui.fixed.menu .item{
+            color: #ffffff;
+        }
         .ui.menu .item img.logo {
             margin-right: 1.5em;
         }
@@ -43,9 +49,32 @@
 <div class="ui fixed menu">
     <div class="ui container">
         <a href="{{ url('/') }}" class="header item">
-            <img class="logo" src="{{ asset('img/flash-reference.png') }}">
+            <img class="logo" src="{{ asset('img/small-white-flash-reference-logo.png') }}">
             {{ config('app.name', 'Laravel') }}
         </a>
+        <div class="right menu">
+            @guest
+                <a class="item" href="{{ route('login') }}">{{ __('Login') }}</a>
+            @else
+                <div class="ui simple dropdown item">
+                    <div class="text">
+                        Hi {{ user()->first_name }}!
+                    </div>
+                    <i class="dropdown icon"></i>
+                    <div class="ui menu">
+                        <!-- Logout -->
+                        <a href="#" class="item" onclick="event.preventDefault();
+                                         document.getElementById('logout-form').submit();">
+                            <i class="fa fa-fw fa-btn fa-sign-out"></i>
+                            {{ __('Logout') }}
+                        </a>
+                        <form id="logout-form" action="{{ route('admin.logout') }}" method="POST" style="display: none;">
+                            @csrf
+                        </form>
+                    </div>
+                </div>
+            @endguest
+        </div>
     </div>
 </div>
 

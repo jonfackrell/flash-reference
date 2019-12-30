@@ -6,7 +6,7 @@ use App\Card;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 
-class CardsImport implements ToModel, WithHeadingRow
+class BulkCardsImport implements ToModel, WithHeadingRow
 {
 
     public $path;
@@ -41,6 +41,10 @@ class CardsImport implements ToModel, WithHeadingRow
                 ->withCustomProperties(['side' => 'front'])
                 //->withResponsiveImages()
                 ->toMediaCollection();
+
+            /*$card->front_image_url = $card->loadMedia()->filter(function ($media, $key) {
+                return $media->custom_properties['side'] == 'front';
+            })->first()->getFullUrl()*/;
         }
 
         if($row['back_image']){
@@ -49,7 +53,13 @@ class CardsImport implements ToModel, WithHeadingRow
                 ->withCustomProperties(['side' => 'back'])
                 //->withResponsiveImages()
                 ->toMediaCollection();
+
+            /*$card->back_image_url = $card->getMedia()->filter(function ($media, $key) {
+                return $media->custom_properties['side'] == 'back';
+            })->first()->getFullUrl();*/
         }
+
+        $card->save();
 
         return $card;
     }

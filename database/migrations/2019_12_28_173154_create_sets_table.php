@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use \Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
 class CreateSetsTable extends Migration
@@ -31,6 +32,8 @@ class CreateSetsTable extends Migration
                 ->on('users')
                 ->onDelete('cascade');
         });
+
+        DB::statement("ALTER TABLE sets AUTO_INCREMENT = 500;");
     }
 
     /**

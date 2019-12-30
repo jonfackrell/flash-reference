@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use \Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
 class CreateInstitutionsTable extends Migration
@@ -23,6 +24,7 @@ class CreateInstitutionsTable extends Migration
             $table->date('enabled_to')->nullable();
             $table->timestamps();
         });
+        DB::statement("ALTER TABLE institutions AUTO_INCREMENT = 500;");
 
         Schema::create('admin_institution', function (Blueprint $table) {
             $table->unsignedBigInteger('institution_id')->unsigned();

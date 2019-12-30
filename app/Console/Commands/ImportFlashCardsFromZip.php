@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Imports\BulkCardsImport;
 use App\Imports\CardsImport;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Storage;
@@ -15,7 +16,7 @@ class ImportFlashCardsFromZip extends Command
      *
      * @var string
      */
-    protected $signature = 'cards:import {file}';
+    protected $signature = 'cards:import {set} {file}';
 
     /**
      * The console command description.
@@ -41,6 +42,7 @@ class ImportFlashCardsFromZip extends Command
      */
     public function handle()
     {
+        $setId = $this->argument('set');
         $file = $this->argument('file');
         $path = dirname($this->argument('file'));
         $unzippedPath = $path . DIRECTORY_SEPARATOR . basename($file, '.zip');
@@ -52,9 +54,8 @@ class ImportFlashCardsFromZip extends Command
 
         // Process csv
         // TODO: Make sure we are using user paths
-        // TODO: Pass set ID to be used when creating cards
-        // TODO: Optimize images and move them to DO Spaces storage
-        Excel::import(new CardsImport($unzippedPath), $unzippedPath . DIRECTORY_SEPARATOR . 'cards.csv');
+        // TODO: Optimize images and move them to DO Spaces storage (This is close. Media is being created and thumbnails generated. I could turn on responsive images, but not sure if this is necessary.)
+        Excel::import(new BulkCardsImport($setId, $unzippedPath), $unzippedPath . DIRECTORY_SEPARATOR . 'cards.csv');
 
         // Clean up
         Storage::deleteDirectory(str_replace(storage_path('app'), '', $unzippedPath));
