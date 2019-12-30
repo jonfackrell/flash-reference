@@ -10,13 +10,15 @@ class CardsImport implements ToModel, WithHeadingRow
 {
 
     public $path;
+    public $setId;
     /**
      * Create a new import instance.
      *
      * @return void
      */
-    public function __construct($path)
+    public function __construct($setId, $path)
     {
+        $this->setId = $setId;
         $this->path = $path;
     }
 
@@ -28,6 +30,7 @@ class CardsImport implements ToModel, WithHeadingRow
     public function model(array $row)
     {
         $card = new Card([
+            'set_id' => $this->setId,
             'front_text' => $row['front_text'],
             'back_text'    => $row['back_text'],
         ]);
