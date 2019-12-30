@@ -53,5 +53,26 @@ class User extends Authenticatable
         return $this->belongsToMany(Institution::class);
     }
 
+    public function getRolesAttribute($value) {
+        return explode('|', $value);
+    }
+
+    public function setRolesAttribute($value) {
+        if(is_array($value)){
+            $this->attributes['roles'] = implode('|', $value);
+        }else{
+            $this->attributes['roles'] = '';
+        }
+
+    }
+
+    /**
+     * Determine whether the user is an instructor.
+     */
+    public function isInstructor()
+    {
+        return in_array(['Instructor'], $this->roles);
+    }
+
 
 }

@@ -1,65 +1,35 @@
-@extends('layouts.app')
+@extends('layouts.web')
 
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Reset Password') }}</div>
 
-                <div class="card-body">
-                    <form method="POST" action="{{ route('password.update') }}">
-                        @csrf
-
-                        <input type="hidden" name="token" value="{{ $token }}">
-
-                        <div class="form-group row">
-                            <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ $email ?? old('email') }}" required autocomplete="email" autofocus>
-
-                                @error('email')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
-
-                                @error('password')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label for="password-confirm" class="col-md-4 col-form-label text-md-right">{{ __('Confirm Password') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
-                            </div>
-                        </div>
-
-                        <div class="form-group row mb-0">
-                            <div class="col-md-6 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
-                                    {{ __('Reset Password') }}
-                                </button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
+    <div class="ui main raised very padded text container segment">
+        <h3 class="ui header">
+            {{ __('Reset Password') }}
+        </h3>
+        {!! Form::post()->route('password.update') !!}
+            {!! Form::text('email')
+                    ->label(__('E-Mail Address'))
+                    ->hint($errors->first('email'), $errors->has('email') ? 'ui pointing red basic label' : '');
+            !!}
+            {!! Form::password('password')
+                    ->label(__('Password'))
+                    ->hint($errors->first('password'), $errors->has('password') ? 'ui pointing red basic label' : '');
+            !!}
+            {!! Form::password('password_confirmation')
+                    ->label(__('Confirm Password'))
+                    ->hint($errors->first('password_confirmation'), $errors->has('password_confirmation') ? 'ui pointing red basic label' : '');
+            !!}
+            <hr />
+            {!! Form::text('institution')
+                    ->label(__('Institution'))
+                    ->hint($errors->first('institution'), $errors->has('institution') ? 'ui pointing red basic label' : '');
+            !!}
+            <div class="clearfix">&nbsp;</div>
+            {!! Form::submit(__('Reset Password')) !!}
+        {!! Form::close() !!}
     </div>
-</div>
 @endsection
+
+@push('scripts')
+
+@endpush
