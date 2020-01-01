@@ -41,6 +41,16 @@
             margin: 5em 0em 0em;
             padding: 5em 0em;
         }
+
+        div [class*="left floated"] {
+            float: left;
+            margin-left: 0.25em;
+        }
+
+        div [class*="right floated"] {
+            float: right;
+            margin-right: 0.25em;
+        }
     </style>
 
 </head>
@@ -52,11 +62,19 @@
             <img class="logo" src="{{ asset('img/small-white-flash-reference-logo.png') }}">
             {{ config('app.name', 'Laravel') }}
         </a>
-        <a class="item" href="#">
+        <a class="item" href="{{ route('sets.create') }}">
             <i class="plus icon"></i>
-            {{ __('New Set') }}
+            {{ __('Add Set') }}
         </a>
         <div class="right menu">
+            <div class="item">
+                {!! Form::get()->route('home.search') !!}
+                    <div class="ui icon input">
+                        <input type="text" name="q" placeholder="{{ __('Search') }}..." value="{{ request('q') }}">
+                        <i class="search link icon"></i>
+                    </div>
+                {!! Form::close() !!}
+            </div>
             @guest
                 <a class="item" href="{{ route('login') }}">{{ __('Login') }}</a>
             @else

@@ -69,6 +69,14 @@ class User extends Authenticatable
         return $this->hasMany(Set::class);
     }
 
+    /**
+     * The sets that belong to the user.
+     */
+    public function recentSets()
+    {
+        return $this->hasMany(Set::class)->orderBy('updated_at', 'DESC')->take(3);
+    }
+
     public function getRolesAttribute($value) {
         return explode('|', $value);
     }

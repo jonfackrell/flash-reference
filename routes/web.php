@@ -18,7 +18,7 @@ Route::get('/', function () {
 
 Auth::routes(['register' => false]);
 
-Route::get('/home', 'HomeController@index')->name('home');
+
 
 Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
 
@@ -32,5 +32,15 @@ Route::middleware(['auth:admin'])->namespace('Admin')->prefix('admin')->name('ad
 
     Route::get('/', 'HomeController@dashboard')->name('home');
     Route::get('/settings', 'SettingsController@index')->name('settings');
+
+});
+
+
+Route::middleware(['auth:web'])->group(function () {
+
+    Route::get('/home', 'HomeController@index')->name('home');
+    Route::get('/search', 'HomeController@search')->name('home.search');
+    Route::resource('/sets', 'SetController');
+    Route::resource('/courses', 'CourseController');
 
 });

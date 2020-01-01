@@ -16,8 +16,9 @@ class CreateSetsTable extends Migration
     {
         Schema::create('sets', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('institution_id')->unsigned();
-            $table->unsignedBigInteger('user_id')->unsigned();
+            $table->unsignedBigInteger('institution_id');
+            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('course_id')->nullable();
             $table->efficientUuid('uuid')->index();
             $table->string('name');
             $table->timestamps();
@@ -31,6 +32,10 @@ class CreateSetsTable extends Migration
                 ->references('id')
                 ->on('users')
                 ->onDelete('cascade');
+
+            $table->foreign('course_id')
+                ->references('id')
+                ->on('courses');
         });
 
         DB::statement("ALTER TABLE sets AUTO_INCREMENT = 500;");
