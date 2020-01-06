@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Set;
 use Illuminate\Http\Request;
 
 class SetController extends Controller
@@ -51,9 +52,15 @@ class SetController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Set $set)
     {
-        //
+        $user = user();
+        $cards = $set->cards;
+
+        return view('app.sets.show', [
+            'user' => $user,
+            'cards' => $cards,
+        ]);
     }
 
     /**

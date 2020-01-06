@@ -29,7 +29,9 @@
             color: #ffffff;
         }
         .ui.menu .item img.logo {
-            margin-right: 1.5em;
+            margin-right: .5em;
+            height: 46px;
+            width: auto;
         }
         .main {
             margin-top: 7em;
@@ -58,7 +60,7 @@
 
 <div class="ui fixed menu">
     <div class="ui container">
-        <a href="{{ url('/') }}" class="header item">
+        <a href="{{ url('/home') }}" class="header item">
             <img class="logo" src="{{ asset('img/small-white-flash-reference-logo.png') }}">
             {{ config('app.name', 'Laravel') }}
         </a>
