@@ -3,8 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Card;
+use App\Charts\SetViewsSummary;
 use App\Set;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class SetController extends Controller
 {
@@ -76,10 +79,42 @@ class SetController extends Controller
         $user = user();
         $cards = $set->cards;
 
+        $setViews = new SetViewsSummary();
+        $setViews->title('Study Set Views');
+
+        $dates = [];
+        $start = Carbon::now()->subDays(30);
+        for ($i = 0 ; $i <= 30; $i++) {
+            $dates[] = $start->copy()->addDays($i)->toDateString();
+        }
+        $setViews->labels($dates);
+
+        $dateData = [];
+        $start = Carbon::now()->subDays(30);
+        for ($i = 0 ; $i <= 30; $i++) {
+            $dateData[$start->copy()->addDays($i)->toDateString()] = 0;
+        }
+
+        $stats = DB::table('stats')
+                    ->select(DB::raw('DATE(created_at) as date'), DB::raw('count(DISTINCT(user_id)) as stat_count'))
+                    ->where('set_id', $set->id)
+                    ->where('created_at', '>', Carbon::now()->subDays(30))
+                    ->groupBy('date')
+                    ->orderBy('date')
+                    ->get();
+
+        $stats->each(function($stat, $key) use (&$dateData){
+            $dateData[$stat->date] = $stat->stat_count;
+        });
+
+        $setViews->dataset('Views', 'line', array_values($dateData))
+            ->backgroundColor($setViews->colors->pop());
+
         return view('app.sets.show', [
             'user' => $user,
             'set' => $set,
             'cards' => $cards,
+            'setViews' => $setViews,
         ]);
     }
 

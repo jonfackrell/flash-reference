@@ -4,14 +4,29 @@
 
     <div class="ui stackable one column centered grid">
         <div class="ten wide column">
+            <h3 class="ui dividing header">
+                {{ $set->name }}
+            </h3>
+        </div>
+    </div>
+
+    <div class="ui stackable one column centered grid">
+        <div class="six wide column">
+            {!! $setViews->container() !!}
+        </div>
+        <div class="four wide column">
+            {!! Form::post()->route('cards.store') !!}
+                {!! Form::hidden('set_id', $set->id) !!}
+                <button class="massive basic grey ui icon button" type="submit">
+                    <i class="plus circle icon"></i>
+                </button>
+            {!! Form::close() !!}
+        </div>
+    </div>
+    <div class="ui stackable one column centered grid">
+        <div class="ten wide column">
             @each('app.sets.cards.show', $cards, 'card', 'app.sets.cards.getting-started')
         </div>
-        {!! Form::post()->route('cards.store') !!}
-            {!! Form::hidden('set_id', $set->id) !!}
-            <button class="massive basic grey ui icon button" type="submit">
-                <i class="plus circle icon"></i>
-            </button>
-        {!! Form::close() !!}
     </div>
 
 @endsection
@@ -19,6 +34,8 @@
 @push('scripts')
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
     <script src="{{ asset('js/summernote-lite.min.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js" charset="utf-8"></script>
+    {!! $setViews->script() !!}
     <script>
         var changed = [];
         $('.summernote').summernote({
