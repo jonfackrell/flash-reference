@@ -36,7 +36,14 @@ class CardController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $card = new Card();
+        $card->set_id = $request->set_id;
+        $card->save();
+
+        return redirect()->route('sets.show', [
+            'set' => $card->set_id,
+            '#' . $card->id,
+        ]);
     }
 
     /**

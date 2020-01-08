@@ -16,6 +16,9 @@ class UsersTableSeeder extends Seeder
             'email' => 'jon.fackrell@gmail.com',
         ])->first();
 
+        $user->institutions()->attach(\App\Institution::first());
+
         $users = factory(App\User::class, 10)->create();
+
     }
 }

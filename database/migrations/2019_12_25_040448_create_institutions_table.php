@@ -41,6 +41,22 @@ class CreateInstitutionsTable extends Migration
 
             $table->primary(['institution_id', 'admin_id']);
         });
+
+        Schema::create('institution_user', function (Blueprint $table) {
+            $table->unsignedBigInteger('institution_id')->unsigned();
+            $table->unsignedBigInteger('user_id')->unsigned();
+
+            $table->foreign('institution_id')
+                ->references('id')
+                ->on('institutions');
+
+            $table->foreign('user_id')
+                ->references('id')
+                ->on('users')
+                ->onDelete('cascade');
+
+            $table->primary(['institution_id', 'user_id']);
+        });
     }
 
     /**

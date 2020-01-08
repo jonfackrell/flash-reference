@@ -6,6 +6,12 @@
         <div class="ten wide column">
             @each('app.sets.cards.show', $cards, 'card', 'app.sets.cards.getting-started')
         </div>
+        {!! Form::post()->route('cards.store') !!}
+            {!! Form::hidden('set_id', $set->id) !!}
+            <button class="massive basic grey ui icon button" type="submit">
+                <i class="plus circle icon"></i>
+            </button>
+        {!! Form::close() !!}
     </div>
 
 @endsection

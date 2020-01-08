@@ -24,7 +24,10 @@ class CourseController extends Controller
      */
     public function create()
     {
-        //
+        $user = user();
+        return view('app.courses.create', [
+            'user' => $user,
+        ]);
     }
 
     /**
@@ -35,7 +38,17 @@ class CourseController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $input = $request->validate([
+            'name' => 'required|max:255',
+        ]);
+
+        $set = new Course();
+        $set->name = $input['name'];
+        $set->institution_id = $request->institution_id;
+        $set->user_id = user()->id;
+        $set->save();
+
+        return redirect()->route('home');
     }
 
     /**

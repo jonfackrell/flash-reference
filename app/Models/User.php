@@ -66,7 +66,7 @@ class User extends Authenticatable
      */
     public function sets()
     {
-        return $this->hasMany(Set::class);
+        return $this->hasMany(Set::class)->orderBy('name');
     }
 
     /**

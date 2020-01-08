@@ -3,7 +3,7 @@
         <div class="ui two column centered grid">
             <div class="column">
                 <div class="ui items">
-                    <a class="ui red ribbon label">{{ __('Front') }}</a>
+                    <a class="ui blue ribbon label">{{ __('Front') }}</a>
                     <div class="item">
                         @if($card->front_image_url)
                             <div class="image">
@@ -30,7 +30,7 @@
             <div class="column">
                 <div class="content">
                     <div class="ui items">
-                        <a class="ui teal right ribbon label">{{ __('Back') }}</a>
+                        <a class="ui violet right ribbon label">{{ __('Back') }}</a>
                         <div class="item">
                             @if($card->back_image_url)
                                 <div class="image">
