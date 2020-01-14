@@ -40,9 +40,11 @@ Route::middleware(['auth:web'])->group(function () {
 
     Route::get('/home', 'HomeController@index')->name('home');
     Route::get('/search', 'HomeController@search')->name('home.search');
+    Route::get('/sets/{set}/preview', 'SetController@preview')->name('sets.preview');
     Route::resource('/sets', 'SetController');
     Route::resource('/courses', 'CourseController');
     Route::post('/cards/{card}/image/upload', 'CardController@imageUpload')->name('cards.image.upload');
     Route::resource('/cards', 'CardController');
 
 });
+

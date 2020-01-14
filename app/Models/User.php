@@ -16,7 +16,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password', 'roles'
     ];
 
     /**
@@ -91,12 +91,47 @@ class User extends Authenticatable
     }
 
     /**
+     * Get the sets associated with the current institution.
+     */
+    public function institutionSets($institution)
+    {
+        return $this->hasMany(Set::class)->where('institution_id', $institution->id)->orderBy('name');
+    }
+
+    /**
      * Determine whether the user is an instructor.
      */
     public function isInstructor()
     {
-        return in_array(['Instructor'], $this->roles);
+        return count(array_intersect(['Instructor'], $this->roles));
     }
 
+    /**
+     * Login LTI user and assign to insitution.
+     */
+    static function login()
+    {
+        $user = User::updateOrCreate([
+            'email' => request()->get('lis_person_contact_email_primary')
+        ], [
+            'name' => request()->get('lis_person_name_given') . ' ' . request()->get('lis_person_name_family'),
+            'roles' => explode(',', request()->get('roles')),
+        ]);
+
+        auth('lti')->login($user);
+
+        return $user;
+    }
+
+    /**
+     * Add user to institution.
+     */
+    public function addToInstitution()
+    {
+        $institution = Institution::whereUuid(request()->get('oauth_consumer_key'), 'consumer_key')->first();
+        $this->institutions()->syncWithoutDetaching($institution);
+
+        return $institution;
+    }
 
 }

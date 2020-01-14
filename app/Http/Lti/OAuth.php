@@ -171,6 +171,7 @@ class OAuthSignatureMethod_RSA_SHA1 extends OAuthSignatureMethod {
     // Check the computed signature against the one passed in the query
     $ok = openssl_verify($base_string, $decoded_sig, $publickeyid);
 
+
     // Release the key resource
     openssl_free_key($publickeyid);
 
@@ -200,8 +201,8 @@ class OAuthRequest {
    */
   public static function from_request($http_method=NULL, $http_url=NULL, $parameters=NULL) {
 
-    $s_https = 'https';
-    $s_port = ':443';
+    $s_https = App::environment('local')?'http':'https';
+    $s_port = App::environment('local')?':80':':443';
     $s_host = request()->server('HTTP_HOST');
     $s_uri = request()->server('REQUEST_URI');
     $s_method = request()->server('REQUEST_METHOD');
@@ -274,7 +275,7 @@ class OAuthRequest {
 //      $qparms = OAuthUtil::parse_parameters($parts['query']);
 //      $parameters = array_merge($qparms, $parameters);
 //    }
-     
+
 
     return new OAuthRequest($http_method, $http_url, $parameters);
   }

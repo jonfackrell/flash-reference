@@ -151,4 +151,22 @@ class SetController extends Controller
     {
         //
     }
+
+
+
+    /**
+     * Preview the study set.
+     *
+     * @param  Set $set
+     * @return \Illuminate\Http\Response
+     */
+    public function preview(Set $set)
+    {
+        $set->load('cards');
+
+        return view('app.sets.preview' , [
+            'course' => $set->course,
+            'set' => $set,
+        ]);
+    }
 }

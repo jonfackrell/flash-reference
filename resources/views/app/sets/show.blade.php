@@ -17,10 +17,16 @@
         <div class="four wide column">
             {!! Form::post()->route('cards.store') !!}
                 {!! Form::hidden('set_id', $set->id) !!}
-                <button class="massive basic grey ui icon button" type="submit">
+                <button class="ui basic grey massive fluid button" type="submit">
                     <i class="plus circle icon"></i>
+                    Add Card
                 </button>
             {!! Form::close() !!}
+            <br />
+            <a href="{{ route('sets.preview', ['set' => $set]) }}" class="ui basic geen massive fluid button">
+                <i class="play icon"></i>
+                Preview
+            </a>
         </div>
     </div>
     <div class="ui stackable one column centered grid">

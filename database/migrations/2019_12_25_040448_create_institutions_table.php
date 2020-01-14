@@ -22,6 +22,7 @@ class CreateInstitutionsTable extends Migration
             $table->boolean('enabled')->default(1);
             $table->date('enabled_from')->nullable();
             $table->date('enabled_to')->nullable();
+            $table->date('last_access_at')->nullable();
             $table->timestamps();
         });
         DB::statement("ALTER TABLE institutions AUTO_INCREMENT = 500;");

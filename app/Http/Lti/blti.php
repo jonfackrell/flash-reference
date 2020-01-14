@@ -65,15 +65,16 @@ class BLTI {
         $row = false;
 
         $oauth_consumer_key = request()->get('oauth_consumer_key');
-        $institution = \App\Institution::whereUuid('consumer_key', $oauth_consumer_key)->first();
+        $institution = \App\Institution::whereUuid($oauth_consumer_key, 'consumer_key')->first();
+
         if(is_null($institution)){
             abort(403, 'Please double check that you have provided the correct Consumer Key. If the problem persists, please contact the Flash Reference support team.');
         }
-        if($institution->enabled_to->lt(\Carbon\Carbon::now())){
-            abort(403, 'Sorry, you no longer have access to this resource.');
+        if($institution->enabled_to->lt(now())){
+            abort(403, 'Your access to Flash Reference expired ' . $institution->enabled_to->toFormattedDateString());
         }
         $secret = $institution->secret;
-        $institution->last_access = \Carbon\Carbon::now()->toDateString();
+        $institution->last_access_at = now();
         $institution->save();
 
 //        if ( is_string($parm) ) {

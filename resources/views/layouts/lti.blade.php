@@ -60,11 +60,7 @@
 
 <div class="ui fixed menu">
     <div class="ui container">
-        <a href="{{ url('/home') }}" class="header item">
-            <img class="logo" src="{{ asset('img/small-white-flash-reference-logo.png') }}">
-            {{ config('app.name', 'Laravel') }}
-        </a>
-        <a class="item" href="{{ route('sets.create') }}">
+        <a class="item" href="{{ route('sets.create') }}" target="_blank">
             <i class="plus icon"></i>
             {{ __('Add Set') }}
         </a>
@@ -77,27 +73,6 @@
                     </div>
                 {!! Form::close() !!}
             </div>
-            @guest
-                <a class="item" href="{{ route('login') }}">{{ __('Login') }}</a>
-            @else
-                <div class="ui simple dropdown item">
-                    <div class="text">
-                        Hi {{ user()->first_name }}!
-                    </div>
-                    <i class="dropdown icon"></i>
-                    <div class="ui menu">
-                        <!-- Logout -->
-                        <a href="#" class="item" onclick="event.preventDefault();
-                                         document.getElementById('logout-form').submit();">
-                            <i class="fa fa-fw fa-btn fa-sign-out"></i>
-                            {{ __('Logout') }}
-                        </a>
-                        <form id="logout-form" action="{{ route('admin.logout') }}" method="POST" style="display: none;">
-                            @csrf
-                        </form>
-                    </div>
-                </div>
-            @endguest
         </div>
     </div>
 </div>

@@ -16,6 +16,12 @@ class Institution extends Model
         'secret' => 'uuid',
     ];
 
+    protected $dates = [
+        'enabled_to',
+        'enabled_from',
+        'last_access_at',
+    ];
+
     public function uuidColumns(): array
     {
         return ['consumer_key', 'secret'];
