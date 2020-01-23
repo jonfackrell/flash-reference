@@ -11,8 +11,8 @@ class InstructorLtiController extends Controller
     {
         $user = auth('lti')->user();
         $sets = $user->sets()->where('institution_id', $institution->id)->get();
-
         return view('lti.instructor.index', [
+            'institution' => $institution,
             'sets' => $sets,
         ]);
     }

@@ -22,6 +22,8 @@ class LtiLaunchController extends Controller
                     $institution = $user->addToInstitution();
 
                     if($user->isInstructor()){
+                        session(['content_item_return_url' => $request->get('content_item_return_url')]);
+                        session(['oauth_version' => $request->get('oauth_version')]);
                         return redirect()->route('lti.instructor.index', [
                             'institution' => $institution
                         ]);
