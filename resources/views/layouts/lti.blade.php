@@ -66,7 +66,7 @@
         </a>
         <div class="right menu">
             <div class="item">
-                {!! Form::get()->route('home.search') !!}
+                {!! Form::get()->route('lti.instructor.index', ['institution' => $institution]) !!}
                     <div class="ui icon input">
                         <input type="text" name="q" placeholder="{{ __('Search') }}..." value="{{ request('q') }}">
                         <i class="search link icon"></i>

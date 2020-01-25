@@ -7,10 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Set extends Model
 {
-
     use GeneratesUuid;
 
-    protected $casts = ['uuid' => 'uuid'];
+    protected $casts = [
+        'uuid' => 'uuid'
+    ];
 
     /**
      * The cards that belong to the set.
@@ -18,6 +19,11 @@ class Set extends Model
     public function cards()
     {
         return $this->hasMany(Card::class);
+    }
+
+    public function uuidColumns(): array
+    {
+        return ['uuid'];
     }
 
 }
