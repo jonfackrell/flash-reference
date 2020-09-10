@@ -13,7 +13,11 @@
                         ->label(__('Name'))
                         ->hint($errors->first('name'), $errors->has('name') ? 'ui pointing red basic label' : '');
                     !!}
-                    {!! Form::select('institution_id', $user->institutions->first()->pluck('name', 'id'))->label('Institution'); !!}
+                    @if($user->institutions->count() > 1)
+                        {!! Form::select('institution_id', $user->institutions->pluck('name', 'id'))->label('Institution'); !!}
+                    @else
+                        {!! Form::hidden('institution_id', $user->institutions->first()->id) !!}
+                    @endif
                 {!! Form::close() !!}
             </div>
         </div>

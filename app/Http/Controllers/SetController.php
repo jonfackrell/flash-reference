@@ -8,6 +8,7 @@ use App\Set;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Gate;
 
 class SetController extends Controller
 {
@@ -76,6 +77,8 @@ class SetController extends Controller
      */
     public function show(Set $set)
     {
+        Gate::authorize('manage-set', $set);
+
         $user = user();
         $cards = $set->cards;
 
@@ -124,9 +127,14 @@ class SetController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Set $set)
     {
-        //
+        Gate::authorize('manage-set', $set);
+
+        return view('app.sets.edit', [
+            'user' => auth()->user(),
+            'set' => $set,
+        ]);
     }
 
     /**
@@ -136,9 +144,21 @@ class SetController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Set $set)
     {
-        //
+        Gate::authorize('manage-set', $set);
+
+        $input = $request->validate([
+            'name' => 'required|max:255',
+        ]);
+
+        $set->name = $input['name'];
+        $set->course_id = $request->course_id;
+        $set->save();
+
+        return redirect()->route('sets.show', [
+            'set' => $set
+        ]);
     }
 
     /**
@@ -147,9 +167,9 @@ class SetController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Set $set)
     {
-        //
+        Gate::authorize('manage-set', $set);
     }
 
 
@@ -162,11 +182,14 @@ class SetController extends Controller
      */
     public function preview(Set $set)
     {
+        Gate::authorize('manage-set', $set);
+
         $set->load('cards');
 
         return view('app.sets.preview' , [
             'course' => $set->course,
             'set' => $set,
+            'section' => null,
         ]);
     }
 }

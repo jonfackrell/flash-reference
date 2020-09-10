@@ -1,8 +1,8 @@
 <div class="ui large vertical menu">
-    <a href="{{ route('home') }}" class="active item">
+    <a href="{{ route('home') }}" class="{{ request()->is('home') ? 'active' : '' }} item">
         {{ __('Home') }}
     </a>
-    <a href="{{ route('sets.index') }}" class="item">
+    <a href="{{ route('sets.index') }}" class="{{ request()->is('sets') ? 'active' : '' }} item">
         {{ __('Sets') }}
     </a>
     <div class="item">

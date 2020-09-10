@@ -73,6 +73,7 @@ class RegisterController extends Controller
     {
         $institution = Institution::create([
             'name' => $data['institution'],
+            'lms' => $data['lms'],
             'consumer_key' => Str::uuid(),
             'secret' => Str::uuid(),
             'enabled' => true,
@@ -96,5 +97,15 @@ class RegisterController extends Controller
         }
 
         return $user;
+    }
+
+    /**
+     * Show the application registration form.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function showRegistrationForm()
+    {
+        return view('admin.auth.register');
     }
 }

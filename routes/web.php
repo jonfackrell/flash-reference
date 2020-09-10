@@ -11,9 +11,19 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+use App\Http\Controllers\CardController;
+
+
+Route::name('web.')->group(function () {
+
+    Route::get('/', [\App\Http\Controllers\WebController::class, 'index'])->name('home');
+    Route::get('/features', [\App\Http\Controllers\WebController::class, 'features'])->name('features');
+    Route::get('/pricing', [\App\Http\Controllers\WebController::class, 'pricing'])->name('pricing');
+    Route::get('/contact', [\App\Http\Controllers\WebController::class, 'contact'])->name('contact');
+    Route::get('/learn', [\App\Http\Controllers\WebController::class, 'learn'])->name('learn');
+
 });
+
 
 
 Auth::routes(['register' => false]);
@@ -44,6 +54,7 @@ Route::middleware(['auth:web'])->group(function () {
     Route::resource('/sets', 'SetController');
     Route::resource('/courses', 'CourseController');
     Route::post('/cards/{card}/image/upload', 'CardController@imageUpload')->name('cards.image.upload');
+    Route::post('/cards/{card}/star', [CardController::class, 'star'])->name('lti.card.star');
     Route::resource('/cards', 'CardController');
 
 });

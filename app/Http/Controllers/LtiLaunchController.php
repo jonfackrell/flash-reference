@@ -18,7 +18,7 @@ class LtiLaunchController extends Controller
 
                 if ($lti->valid) {
 
-                    $user = User::login();
+                    $user = User::login('lti');
                     $institution = $user->addToInstitution();
 
                     if($user->isInstructor()){
@@ -34,7 +34,6 @@ class LtiLaunchController extends Controller
                     }
 
                 }else{
-                    // dd($request->server());
                     return abort(403, __($lti->message));
                 }
 
@@ -48,4 +47,5 @@ class LtiLaunchController extends Controller
         }
 
     }
+
 }

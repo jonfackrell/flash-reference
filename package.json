@@ -25,6 +25,7 @@
     "dependencies": {
         "semantic-ui": "^2.4.2",
         "summernote": "^0.8.14",
-        "vue": "^2.6.11"
+        "vue": "^2.6.11",
+        "vue-mousetrap": "^1.0.1"
     }
 }

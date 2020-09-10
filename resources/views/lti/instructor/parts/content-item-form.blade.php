@@ -1,8 +1,8 @@
 {!! SemanticForm::open()
-                        ->post()
-                        ->action(session('content_item_return_url'))
-                        ->addClass('link-selection')
-                        ->encType('application/x-www-form-urlencoded')
+                ->post()
+                ->action(session('content_item_return_url'))
+                ->addClass('link-selection')
+                ->encType('application/x-www-form-urlencoded')
     !!}
     {!! SemanticForm::hidden('lti_message_type', "ContentItemSelection") !!}
     {!! SemanticForm::hidden('lti_version', 'LTI-1p0') !!}

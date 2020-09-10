@@ -17,6 +17,7 @@ class CreateInstitutionsTable extends Migration
         Schema::create('institutions', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name');
+            $table->string('lms');
             $table->efficientUuid('consumer_key')->index();
             $table->efficientUuid('secret')->index();
             $table->boolean('enabled')->default(1);

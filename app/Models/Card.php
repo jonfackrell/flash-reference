@@ -27,6 +27,10 @@ class Card extends Model implements HasMedia, Sortable
         'sort_when_creating' => true,
     ];
 
+    protected $appends = [
+        'starred',
+    ];
+
     public function buildSortQuery()
     {
         return static::query()->where('set_id', $this->set_id);
@@ -38,5 +42,10 @@ class Card extends Model implements HasMedia, Sortable
             ->width(368)
             ->height(232)
             ->sharpen(10);
+    }
+
+    public function getStarredAttribute($value)
+    {
+        return ((Star::where('card_id', $this->getKey())->where('user_id', auth()->user()->id)->count() > 0)?true:false);
     }
 }

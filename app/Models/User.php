@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
@@ -109,8 +110,11 @@ class User extends Authenticatable
     /**
      * Login LTI user and assign to insitution.
      */
-    static function login()
+    static function login($guard)
     {
+        if(is_null(request()->get('lis_person_contact_email_primary'))){
+            return abort(403, 'User email address is required to use this tool');
+        }
         $user = User::updateOrCreate([
             'email' => request()->get('lis_person_contact_email_primary')
         ], [
@@ -118,7 +122,7 @@ class User extends Authenticatable
             'roles' => explode(',', request()->get('roles')),
         ]);
 
-        auth('lti')->login($user);
+        auth($guard)->login($user);
 
         return $user;
     }
@@ -132,6 +136,14 @@ class User extends Authenticatable
         $this->institutions()->syncWithoutDetaching($institution);
 
         return $institution;
+    }
+
+    /**
+     * The starred cards that belong to the user.
+     */
+    public function starred()
+    {
+        return $this->belongsToMany(Card::class, 'card_user');
     }
 
 }

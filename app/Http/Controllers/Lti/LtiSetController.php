@@ -31,10 +31,15 @@ class LtiSetController extends Controller
      * @param  uuid  $uuid
      * @return \Illuminate\Http\Response
      */
-    public function show(Institution $institution, $uuid)
+    public function flashcards(Institution $institution, $uuid)
     {
         $set = Set::whereUuid($uuid, 'uuid')->first();
 
-        return $set->name;
+        $set->load('cards');
+
+        return view('lti.sets.flashcards' , [
+            'course' => $set->course,
+            'set' => $set,
+        ]);
     }
 }

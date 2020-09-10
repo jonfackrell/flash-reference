@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Course;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class CourseController extends Controller
 {
@@ -59,6 +60,8 @@ class CourseController extends Controller
      */
     public function show(Course $course)
     {
+        Gate::authorize('manage-course', $course);
+
         $user = user();
         $sets = $course->sets;
 
@@ -75,9 +78,9 @@ class CourseController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Course $course)
     {
-        //
+        Gate::authorize('manage-course', $course);
     }
 
     /**
@@ -87,9 +90,9 @@ class CourseController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Course $course)
     {
-        //
+        Gate::authorize('manage-course', $course);
     }
 
     /**
@@ -98,8 +101,8 @@ class CourseController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Course $course)
     {
-        //
+        Gate::authorize('manage-course', $course);
     }
 }

@@ -5,11 +5,9 @@
                 <div class="ui items">
                     <a class="ui blue ribbon label">{{ __('Front') }}</a>
                     <div class="item">
-                        @if($card->front_image_url)
-                            <div class="image">
-                                <img src="{{ $card->front_image_url }}">
-                            </div>
-                        @endif
+                        <div class="image" style="@if(is_null($card->front_image_url)) display: none; @endif">
+                            <img class="front_image" src="{{ $card->front_image_url }}">
+                        </div>
                         <div class="content">
                             <div class="meta">
                                 {!! Form::bind($card)->post()->route('cards.store', [
@@ -32,11 +30,9 @@
                     <div class="ui items">
                         <a class="ui violet right ribbon label">{{ __('Back') }}</a>
                         <div class="item">
-                            @if($card->back_image_url)
-                                <div class="image">
-                                    <img src="{{ $card->back_image_url }}">
-                                </div>
-                            @endif
+                            <div class="image" style="@if(is_null($card->back_image_url)) display: none; @endif">
+                                <img class="back_image" src="{{ $card->back_image_url }}">
+                            </div>
                             <div class="content">
                                 <div class="meta">
                                     {!! Form::bind($card)->post()->route('cards.store', [
@@ -76,9 +72,9 @@
                 <div class="right floated">
                     {!! Form::delete()->route('cards.destroy', [
                             'card' => $card
-                        ])
+                        ])->addClass('delete-card')
                     !!}
-                        <button type="submit" class="ui icon red button" title="{{ __('Delete Card') }}">
+                        <button type="submit" class="ui icon red button delete" title="{{ __('Delete Card') }}">
                             <i class="trash icon"></i>
                         </button>
                     {!! Form::close() !!}
@@ -97,5 +93,8 @@
 
             </div>
         </div>
+    </div>
+    <div class="ui bottom attached progress" style="display: none;">
+        <div class="bar"></div>
     </div>
 </div>

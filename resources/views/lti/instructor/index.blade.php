@@ -40,7 +40,7 @@
             $(document).on('click', '.link.list .item', function(e){
                 e.preventDefault();
                 var $item = $(this);
-                app.returnLtiLink($item.text().trim(), '{{ route('lti.sets.index', ['institution' => $institution->id])}}/' + $item.data('uuid'));
+                app.returnLtiLink($item.text().trim(), '{{ route('lti.sets.index', ['institution' => $institution->id])}}/' + $item.data('uuid') + '/flashcards');
             });
         });
     </script>

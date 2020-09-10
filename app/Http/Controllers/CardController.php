@@ -21,11 +21,23 @@ class CardController extends Controller
     /**
      * Show the form for creating a new resource.
      *
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        $card = new Card();
+        $card->set_id = $request->set_id;
+        $card->save();
+
+        if(request()->ajax()) {
+            return view('app.sets.cards.show', [
+                'card' => $card,
+            ]);
+        }
+        else{
+            return back();
+        }
     }
 
     /**
@@ -40,9 +52,12 @@ class CardController extends Controller
         $card->set_id = $request->set_id;
         $card->save();
 
-        return redirect()->route('sets.show', [
+        /*return redirect()->route('sets.show', [
             'set' => $card->set_id,
             '#' . $card->id,
+        ]);*/
+        return view('app.sets.cards.show', [
+            'card' => $card,
         ]);
     }
 
@@ -99,7 +114,13 @@ class CardController extends Controller
     {
         $card->delete();
 
-        return back();
+        if(request()->ajax()){
+            return response()->json([
+                'status' => 'deleted',
+            ]);
+        }else{
+            return back();
+        }
     }
 
 
@@ -121,7 +142,7 @@ class CardController extends Controller
                     $media->delete();
                 }
             }
-            $card
+            $media = $card
                 ->addMediaFromRequest('front_image')
                 ->usingFileName(Str::uuid().'.'.$request->file('front_image')->extension())
                 ->withCustomProperties(['side' => 'front'])
@@ -134,7 +155,7 @@ class CardController extends Controller
                     $media->delete();
                 }
             }
-            $card
+            $media = $card
                 ->addMediaFromRequest('back_image')
                 ->usingFileName(Str::uuid().'.'.$request->file('back_image')->extension())
                 ->withCustomProperties(['side' => 'back'])
@@ -142,9 +163,30 @@ class CardController extends Controller
                 ->toMediaCollection();
         }
 
-        return redirect()->route('sets.show', [
+        return $request->hasFile('front_image') ? ['image' => 'front_image', 'image_url' => $media->getFullUrl()] :  ['image' => 'back_image', 'image_url' => $media->getFullUrl()];
+
+        /*return redirect()->route('sets.show', [
             'set' => $card->set_id,
             '#' . $card->id,
-        ]);
+        ]);*/
+    }
+
+    /**
+     * Star the specified resource.
+     *
+     * @param  \App\Card  $card
+     * @return \Illuminate\Http\Response
+     */
+    public function star(Request $request, Card $card)
+    {
+        $user = auth()->user();
+
+        if($request->get('action') == 'true'){
+            $user->starred()->attach($card);
+        }else{
+            $user->starred()->detach($card);
+        }
+
+        return response()->json($card);
     }
 }

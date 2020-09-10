@@ -64,19 +64,23 @@
             <img class="logo" src="{{ asset('img/small-white-flash-reference-logo.png') }}">
             {{ config('app.name', 'Laravel') }}
         </a>
-        <a class="item" href="{{ route('sets.create') }}">
-            <i class="plus icon"></i>
-            {{ __('Add Set') }}
-        </a>
+        @if(auth()->check())
+            <a class="item" href="{{ route('sets.create') }}">
+                <i class="plus icon"></i>
+                {{ __('Add Set') }}
+            </a>
+        @endif
         <div class="right menu">
-            <div class="item">
-                {!! Form::get()->route('home.search') !!}
-                    <div class="ui icon input">
-                        <input type="text" name="q" placeholder="{{ __('Search') }}..." value="{{ request('q') }}">
-                        <i class="search link icon"></i>
-                    </div>
-                {!! Form::close() !!}
-            </div>
+            @if(auth()->check())
+                <div class="item">
+                    {!! Form::get()->route('home.search') !!}
+                        <div class="ui icon input">
+                            <input type="text" name="q" placeholder="{{ __('Search') }}..." value="{{ request('q') }}">
+                            <i class="search link icon"></i>
+                        </div>
+                    {!! Form::close() !!}
+                </div>
+            @endif
             @guest
                 <a class="item" href="{{ route('login') }}">{{ __('Login') }}</a>
             @else

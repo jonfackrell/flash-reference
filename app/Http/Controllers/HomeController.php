@@ -26,13 +26,21 @@ class HomeController extends Controller
     public function index()
     {
         $user = user();
-        $user->load('courses');
-        $user->load('sets');
+        if(in_array('Student', $user->roles) && !in_array('Instructor', $user->roles)){
+            return view('app.student.home', [
+                'user' => $user,
+                'sets' => $user->recentSets,
+            ]);
+        }else{
+            $user->load('courses');
+            $user->load('sets');
 
-        return view('home', [
-            'user' => $user,
-            'sets' => $user->recentSets,
-        ]);
+            return view('app.instructor.home', [
+                'user' => $user,
+                'sets' => $user->recentSets,
+            ]);
+        }
+
     }
 
     /**
